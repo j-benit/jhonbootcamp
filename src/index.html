@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <title>Energia solar</title>
+  <title>Energia solar Colombia</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
@@ -34,7 +34,11 @@
         }
       });
     }
-
+    
+    function mostrarProyecto() {
+      const contenido = document.getElementById("proyectoContenido");
+      contenido.style.display = contenido.style.display === "none" ? "block" : "none";
+    }
 
 
     function calculadora() {
@@ -137,6 +141,16 @@
     .btn-custom:hover {
       background-color: #004d40;
     }
+
+    .img-fluid {
+      width: 100%;
+      height: 200px; /* Ajusta a la altura deseada */
+      object-fit: cover; /* Mantiene las proporciones de la imagen */
+    }
+    #proyectoContenido {
+      display: none; /* Se oculta inicialmente */
+    }
+
   </style>
 </head>
 <body>
@@ -150,6 +164,57 @@
   <h2 class="section-title">Nuestra Misión</h2>
   <p>Brindar energía solar sostenible, accesible y eficiente para hogares, empresas y comunidades, contribuyendo a un planeta más limpio.</p>
 </div>
+
+<div class="container-fluid text-center">
+  <h2 class="section-title">¿Por qué Energía Solar?</h2>
+  <p>
+    La energía solar es una fuente inagotable y limpia que nos permite reducir la huella de carbono.
+    A través de paneles solares, podemos generar electricidad de manera eficiente y económica.
+  </p>
+  <p>
+    En Colombia, la abundante radiación solar nos posiciona como un país con inmenso potencial para liderar proyectos renovables.
+  </p>
+</div>
+
+<div id="servicios" class="container-fluid bg-green text-center">
+  <h2 class="section-title">Potencial Solar en Colombia</h2>
+  <div class="row">
+    <div class="col-sm-3">
+      <img src="static/guajira.PNG" alt="La Guajira" class="img-fluid">
+      <h4>La Guajira</h4>
+      <p>Radiación solar excepcional de 6 kWh/m² diarios.</p>
+    </div>
+    <div class="col-sm-3">
+      <img src="static/valle.PNG" alt="Valle del Cauca" class="img-fluid">
+      <h4>Valle del Cauca</h4>
+      <p>Ideal para procesos agrícolas y proyectos renovables.</p>
+    </div>
+    <div class="col-sm-3">
+      <img src="static/llanos.PNG" alt="Llanos Orientales" class="img-fluid">
+      <h4>Llanos Orientales</h4>
+      <p>Planicies extensas con baja nubosidad.</p>
+    </div>
+    <div class="col-sm-3">
+      <img src="static/caribe.PNG" alt="Región Caribe" class="img-fluid">
+      <h4>Región Caribe</h4>
+      <p>Alta radiación solar durante todo el año.</p>
+    </div>
+  </div>
+</div>
+
+
+<h1>Proyectos de Energía Solar</h1>
+  <ul>
+    <li>
+      <strong>
+        <a href="javascript:void(0)" onclick="mostrarProyecto()">Comunidad Energética Barrio El Salvador</a>
+      </strong>
+    </li>
+  </ul>
+
+
+
+
 
 <div id="servicios" class="container-fluid bg-green text-center">
   <h2 class="section-title">Nuestros Servicios</h2>
@@ -231,8 +296,43 @@
   </div>
 </div>
 
+<div id="proyectoContenido">
+  <h2>Comunidad Energética Barrio El Salvador</h2>
+  <p>
+    En el barrio El Salvador, en el centro-oriente de Medellín, un sector de familias trabajadoras de clase media está operando la primera comunidad que le inyecta energía solar al Sistema Interconectado Nacional (SIN), en un hecho histórico en la transición energética en Colombia.
+  </p>
+  <p>
+    La comunidad, EPM, la Universidad EIA, ERCO y NEU, estás últimas empresas integrantes del programa Ventures EPM, con el apoyo internacional del Reino Unido, sumaron talentos para implementar este piloto.
+  </p>
+  <p>
+    Darío Amar Flórez, vicepresidente ejecutivo de Nuevos Negocios, Innovación y Tecnología de EPM, explicó que “se trata de un nuevo modelo de prestación del servicio de energía, que busca dinamizar la transición energética en Colombia, donde la producción de electricidad se realiza a partir de fuentes de energía renovables no convencionales (ERNC) para inyectar energía a la red eléctrica bajo la figura de generación distribuida y recibir un reconocimiento económico por esa energía”.
+  </p>
+  <h3>Así opera la comunidad energética solar</h3>
+  <p>
+    Lo que alguna vez se soñó, hoy ya es una realidad para estas 24 familias pioneras del barrio El Salvador. A través de un sistema de puntos, la generación solar, en forma de generación distribuida, se convierte en una fuente de ingresos para la comunidad. Estos puntos pueden ser usados para pagar la factura de la energía al final del mes, adquirir servicios relacionados o incluso realizar intercambios entre la comunidad.
+  </p>
+  <p>
+    El esquema implementado en el barrio El Salvador abre el camino para acercar la tecnología solar a los usuarios de los estratos socioeconómicos 1, 2 y 3, superar barreras crediticias y físicas y lograr economías de escala.
+  </p>
+  <h3>Medición inteligente</h3>
+  <p>
+    Frente al consumo de energía, cada integrante de la comunidad cuenta con un medidor inteligente y acceso a una plataforma que le permite en tiempo real gestionar, monitorear, controlar y tomar decisiones frente a su consumo de energía.
+  </p>
+  <p>
+    La puesta en marcha de este proyecto ha sido un éxito, en la medida que las familias lograron articularse y fortalecer el tejido social de su comunidad, para a través de la generación distribuida percibir beneficios económicos y ambientales.
+  </p>
+  <p>
+    <strong>Para leer más:</strong>
+    <ul>
+      <li><a href="https://www.elnuevosiglo.com.co/ambiente-y-ciencia/el-salvador-barrio-de-medellin-que-opera-con-energia-solar" target="_blank">Artículo de El Nuevo Siglo</a></li>
+      <li><a href="https://www.medellin.gov.co/es/sala-de-prensa/noticias/sabias-que-en-el-barrio-el-salvador-en-medellin-existe-la-primera-comunidad-energetica-de-colombia/" target="_blank">Noticia en Medellín.gov</a></li>
+      <li><a href="https://cambio.com.co/articulo/como-funciona-la-comunidad-energetica-del-barrio-el-salvador-en-colombia/" target="_blank">Artículo en Cambio</a></li>
+    </ul>
+  </p>
+</div>
+
 <footer class="container-fluid text-center">
-  <p>© 2024 Energy RogerCORP | Soluciones de Energía Renovable</p>
+  <p>© 2024 Energy solarCORP | Soluciones de Energía Renovable</p>
 </footer>
 
 </body>
