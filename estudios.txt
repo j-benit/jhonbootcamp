@@ -1,0 +1,2 @@
+{"titulo": "Barbero", "entidad": "undefined", "fecha": "2024-07-06"}
+{"titulo": "Desarrollador de Software", "entidad": "undefined", "fecha": "2024-12-08"}

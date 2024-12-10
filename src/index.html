@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <title>Energia solar</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+  <link rel="stylesheet" href="https://cdn.datatables.net/2.1.8/css/dataTables.dataTables.css" />
+  
+<script src="https://cdn.datatables.net/2.1.8/js/dataTables.js"></script>
+  
+  <script>
+
+    function mostrarGrafico() {
+      $.ajax({
+        url: '/graficar/' + $("#sl_paises").val() + "/" + $("#sl_grafico").val(),
+        type: 'GET',
+        success: function(r) {
+          $("#info").html(r);
+        }
+      });
+    }
+
+    function cargarData() {
+      $.ajax({
+        url: '/cargarfuentedatos',
+        type: 'GET',
+        success: function(r) {
+          $("#info").html(r);
+          $('#t_datos').DataTable();
+        }
+      });
+    }
+
+
+
+    function calculadora() {
+      // Crear un formulario de entrada para la calculadora
+      const calculatorForm = `
+        <div class="row mt-4">
+          <div class="col-md-6">
+            <label for="kwMes" class="form-label">Consumo de energía (kWh/mes):</label>
+            <select id="kwMes" class="form-select">
+              ${Array.from({length: 5000}, (_, i) => (i + 1) ).map(value => `<option value="${value}">${value} kWh</option>`).join('')}
+            </select>
+          </div>
+          <div class="col-md-6">
+            <label for="horasLuz" class="form-label">Horas de luz solar promedio (diarias):</label>
+            <select id="horasLuz" class="form-select">
+              ${Array.from({length: 24}, (_, i) => i + 1).map(value => `<option value="${value}">${value} horas</option>`).join('')}
+            </select>
+          </div>
+        </div>
+        <div class="row mt-4">
+          <div class="col-md-12 text-center">
+            <button onclick="calcularPaneles()" class="btn btn-primary">Calcular</button>
+          </div>
+        </div>
+        <div id="resultado" class="mt-4"></div>
+      `;
+      $("#info2").html(calculatorForm);
+    }
+
+    function calcularPaneles() {
+      const kwMes = parseFloat($("#kwMes").val());
+      const horasLuz = parseFloat($("#horasLuz").val());
+
+      if (!kwMes || !horasLuz || kwMes <= 0 || horasLuz <= 0) {
+        $("#resultado").html("<div class='alert alert-danger'>Por favor, seleccione valores válidos.</div>");
+        return;
+      }
+
+      // Suposiciones:
+      const eficienciaPanel = 0.18; // Eficiencia promedio del 18%
+      const potenciaPanel = 0.3; // Cada panel genera 0.3 kW en condiciones óptimas
+
+      // Cálculos:
+      const energiaDiaria = kwMes / 30; // Consumo diario en kWh
+      const energiaSolarDiaria = horasLuz * potenciaPanel * eficienciaPanel; // Energía producida por un panel al día
+      const panelesNecesarios = Math.ceil(energiaDiaria / energiaSolarDiaria); // Número de paneles necesarios
+
+      // Resultado:
+      const resultadoHTML = `
+        <div class='alert alert-success'>
+          <h4>Resultados:</h4>
+          <p><strong>Consumo mensual:</strong> ${kwMes.toFixed(2)} kWh</p>
+          <p><strong>Horas de luz solar:</strong> ${horasLuz.toFixed(2)} horas/día</p>
+          <p><strong>Paneles necesarios:</strong> ${panelesNecesarios} panel(es)</p>
+          <p><strong>Eficiencia de los paneles:</strong> ${(eficienciaPanel * 100).toFixed(2)}%</p>
+        </div>
+      `;
+      $("#resultado").html(resultadoHTML);
+    }
+
+  </script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+    }
+    footer {
+      background-color: #004d40;
+      color: white;
+      padding: 25px;
+    }
+    .jumbotron {
+      background: url('') no-repeat center center;
+      background-size: cover;
+      color: white;
+    }
+    .jumbotron h1, .jumbotron p {
+      color: #ffffff;
+      text-shadow: 2px 2px 4px #000;
+    }
+    .section-title {
+      color: #00695c;
+      text-transform: uppercase;
+      font-weight: bold;
+      margin-bottom: 30px;
+    }
+    .bg-green {
+      background-color: #e8f5e9;
+      padding: 20px 0;
+    }
+    .service-icon {
+      font-size: 50px;
+      color: #00695c;
+      margin-bottom: 15px;
+    }
+    .btn-custom {
+      background-color: #00695c;
+      color: white;
+      border: none;
+    }
+    .btn-custom:hover {
+      background-color: #004d40;
+    }
+  </style>
+</head>
+<body>
+
+<div class="jumbotron text-center">
+  <h1>Energia Solar</h1>      
+  <p>Liderando el futuro con soluciones de energía renovable</p>
+</div>
+
+<div class="container-fluid text-center">
+  <h2 class="section-title">Nuestra Misión</h2>
+  <p>Brindar energía solar sostenible, accesible y eficiente para hogares, empresas y comunidades, contribuyendo a un planeta más limpio.</p>
+</div>
+
+<div id="servicios" class="container-fluid bg-green text-center">
+  <h2 class="section-title">Nuestros Servicios</h2>
+  <div class="row">
+    <div class="col-sm-4">
+      <i class="fas fa-home service-icon"></i>
+      <h4>Instalaciones Residenciales</h4>
+      <p>Soluciones personalizadas para hogares que buscan reducir costos y adoptar energía verde.</p>
+    </div>
+    <div class="col-sm-4">
+      <i class="fas fa-building service-icon"></i>
+      <h4>Sistemas Comerciales</h4>
+      <p>Proyectos solares para empresas que buscan eficiencia energética y sostenibilidad.</p>
+    </div>
+    <div class="col-sm-4">
+      <i class="fas fa-tools service-icon"></i>
+      <h4>Consultoría y Mantenimiento</h4>
+      <p>Asesoría profesional y mantenimiento de sistemas solares para garantizar su óptimo funcionamiento.</p>
+    </div>
+  </div>
+</div>
+
+<div class="container-fluid text-center">
+  <h2 class="section-title">Por Qué Elegirnos</h2>
+  <div class="row">
+    <div class="col-sm-3">
+      <i class="fas fa-lightbulb service-icon"></i>
+      <h4>Innovación</h4>
+      <p>Usamos la última tecnología para maximizar la eficiencia de tus sistemas solares.</p>
+    </div>
+    <div class="col-sm-3">
+      <i class="fas fa-handshake service-icon"></i>
+      <h4>Compromiso</h4>
+      <p>Nos dedicamos a ofrecer soluciones sostenibles que beneficien a nuestros clientes y al medio ambiente.</p>
+    </div>
+    <div class="col-sm-3">
+      <i class="fas fa-award service-icon"></i>
+      <h4>Experiencia</h4>
+      <p>Más de 10 años liderando proyectos de energía renovable en toda la región.</p>
+    </div>
+    <div class="col-sm-3">
+      <i class="fas fa-headset service-icon"></i>
+      <h4>Soporte</h4>
+      <p>Ofrecemos atención personalizada antes, durante y después de la instalación.</p>
+    </div>
+  </div>
+</div>
+
+<!-- Nueva Sección: Proyecto -->
+<div class="container-fluid text-center">
+  <h2 class="section-title">Proyecto</h2>
+  <p>Explora los detalles de nuestro proyecto a través de estas herramientas interactivas:</p>
+  <div class="panel-group" id="accordion">
+    <div class="panel panel-default">
+      <div class="panel-heading" onclick="cargarData()">
+        <h4 class="panel-title">
+          <a data-toggle="collapse" data-parent="#accordion" href="#collapse1">
+            Fuente de datos
+          </a>
+        </h4>
+      </div>
+      <div id="collapse1" class="panel-collapse collapse">
+        <div class="panel-body" id="info">Información pendiente.</div>
+      </div>
+    </div>
+    
+    <div class="panel panel-default">
+      <div class="panel-heading" onclick="calculadora()">
+        <h4 class="panel-title">
+          <a data-toggle="collapse" data-parent="#accordion" href="#collapse3">
+            Calculadora
+          </a>
+        </h4>
+      </div>
+      <div id="collapse3" class="panel-collapse collapse">
+        <div class="panel-body" id="info2">Información pendiente.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<footer class="container-fluid text-center">
+  <p>© 2024 Energy RogerCORP | Soluciones de Energía Renovable</p>
+</footer>
+
+</body>
+</html>
